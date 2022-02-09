@@ -472,6 +472,8 @@ function make_entry.gen_from_buffer(opts)
     local bufname = entry.info.name ~= "" and entry.info.name or "[No Name]"
     -- if bufname is inside the cwd, trim that part of the string
     bufname = Path:new(bufname):normalize(cwd)
+    local dir = vim.fn.fnamemodify(bufname, ':h')
+    bufname = vim.fn.fnamemodify(bufname, ':t')..' - '..dir
 
     local hidden = entry.info.hidden == 1 and "h" or "a"
     local readonly = vim.api.nvim_buf_get_option(entry.bufnr, "readonly") and "=" or " "
